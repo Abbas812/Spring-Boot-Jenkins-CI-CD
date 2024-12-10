@@ -8,10 +8,16 @@ pipeline {
 
     stages {
         stage('Code Checkout') {
-            steps {
-                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/Abbas812/Spring-Boot-Jenkins-CI-CD'
-            }
-        }
+           steps {
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/main']],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [],
+                    userRemoteConfigs: [[
+                        url: 'https://github.com/Abbas812/Spring-Boot-Jenkins-CI-CD.git',
+                        credentialsId: 'github-credentials' // Replace with your Jenkins credentials ID
+                    ]]
         
        
         stage('Clean & Package'){
